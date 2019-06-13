@@ -4,7 +4,8 @@ import 'standings.dart';
 import 'upcomingMatches.dart';
 import 'topScorers.dart';
 
-final String token = 'c2928278d71247c3bcb7c4ccc89cc2c6';
+//Acquire token from https://www.football-data.org and insert it here
+final String token = '';
 
 void main() {
   //debugPaintSizeEnabled = true;
