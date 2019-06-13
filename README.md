@@ -1,6 +1,6 @@
 # Football Leagues Stats
 
-Application i created with flutter to view stats of famous leagues at a glance <br>
+Application I created with flutter to view stats of famous leagues at a glance <br>
 Includes upcoming matches and their dates, current standings and top scorers for each league <br>
 
 Leagues included : <br>
