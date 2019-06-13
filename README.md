@@ -1,16 +1,13 @@
-# myflapp2
+# Football Leagues Stats
 
-A new Flutter application.
+Application i created with flutter to view stats of famous leagues at a glance <br>
+Includes upcoming matches and their dates, current standings and top scorers for each league <br>
 
-## Getting Started
+Leagues included : <br>
+* Premier League <br>
+* La Liga <br>
+* Serie A <br>
+* Ligue 1 <br>
+* BundesLiga <br>
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+This project uses the REST API provided kindly by https://www.football-data.org/
