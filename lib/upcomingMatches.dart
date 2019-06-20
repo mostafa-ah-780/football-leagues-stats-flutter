@@ -41,61 +41,66 @@ class upcomingMatchesState extends State<upcomingMatches> {
                 child: CircularProgressIndicator(),
               );
             } else {
-              return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisSpacing: 10,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10),
+              return ListView.builder(
                   itemCount: snapshot.data.length,
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.all(5),
                   itemBuilder: (context, i) {
-                    return Card(
-                        margin: EdgeInsets.all(5),
-                        shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(15)),
-
-                        //color: Color.fromRGBO(94, 124, 139, 1),
-                        //
-                        color: leagueColor.withOpacity(0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Row(
                           children: <Widget>[
+                            //first part of match details
                             Expanded(
-                              flex: 2,
-                              child: Center(
-                                child: FittedBox(
-                                    alignment: Alignment(0, 0),
-                                    child: Text(
-                                      snapshot.data[i].homeTeam,
-                                      style: teamStyle,
-                                    )),
+                              flex: 3,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                //crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  FittedBox(
+                                      child: Text(snapshot.data[i].homeTeam,
+                                          style: teamStyle),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(50,0,50,0),
+                                    child: Divider(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  FittedBox(
+                                      child: Text(snapshot.data[i].awayTeam,
+                                          style: teamStyle),
+                                      fit: BoxFit.fitWidth
+                                  )
+                                ],
                               ),
                             ),
+
+                            //second part of match details
                             Expanded(
-                              child: Center(
-                                child: Text('VS'),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Center(
-                                child: FittedBox(
-                                    fit: BoxFit.fitWidth,
-                                    child: Text(
-                                      snapshot.data[i].awayTeam,
-                                      style: teamStyle,
-                                    )),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(snapshot.data[i].matchDay),
-                            ),
-                            Expanded(
-                              child: Center(
-                                child: Text(snapshot.data[i].matchTime),
-                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  FittedBox(
+                                      child: timeFormatter(snapshot.data[i]),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                                  FittedBox(
+                                      child: dayFormatter(snapshot.data[i]),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                                ],
+                              )
                             )
                           ],
-                        ));
+                        ),
+                      ),
+                    );
                   });
             }
           },
@@ -130,4 +135,31 @@ Future<List<match>> getMatches(String code) async {
 }
 
 TextStyle teamStyle =
-    TextStyle(color: Colors.white, fontSize: 20, fontStyle: FontStyle.italic);
+    TextStyle(color: Colors.black, fontSize: 20, fontStyle: FontStyle.italic);
+
+timeFormatter(match m) {
+  String convertedTime = m.matchTime;
+  print(m.matchTime);
+  int time = int.parse(m.matchTime.substring(0, 2));
+  //print(m.matchTime);
+  //print(time);
+  if (time > 12) {
+    time = time - 12;
+    convertedTime = time.toString() + m.matchTime.substring(2) + ' PM';
+  }
+  print(convertedTime);
+  return Text(convertedTime);
+}
+
+dayFormatter(match m){
+  String d = m.matchDay;
+  List splitD = d.split('-');
+  if(splitD[0].toString().startsWith('0'))
+    splitD[0] = splitD[0].toString().substring(1);
+
+  if(splitD[1].toString().startsWith('0'))
+    splitD[1] = splitD[1].toString().substring(1);
+
+  d = splitD[0] + '/' + splitD[1];
+  return Text(d);
+}
